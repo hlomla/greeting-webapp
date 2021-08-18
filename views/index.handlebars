@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greetings Exercise</title>
+    <link rel="stylesheet" href="/css/simple-grid.css">
+    <link rel="stylesheet" href="/css/style.css" </head>
+
+<body>
+    <div class="row">
+        <div class="col-12">
+            <h1>Greetings</h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="errors">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+
+
+        </div>
+
+        <div class="col-4" class="Count">
+
+
+        </div>
+    </div>
+    <div class="row">
+        <form action="/" method="POST">
+
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="theNames" class="name-input" value=""><br>
+
+            <span class="counter">
+                Count :
+                {{counter}}
+            </span>
+
+            <input type="radio" id="" name="language" value="isiXhosa">
+            <label for="isiXhosa">isiXhosa</label>
+
+            <input type="radio" id="" name="language" value="Greek">
+            <label for="Greek">Greek</label>
+
+            <input type="radio" id="" name="language" value="English">
+            <label for="English">English</label>
+
+            <div class="row">
+
+                <button class="Greet-Me" type="submit">Greet Me</button>
+                <button class="Clear" type="submit">Clear</button>
+
+            </div>
+
+            <div class="greet-output" text-align="center">
+                {{output}}
+            </div>
+
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+        </div>
+    </div>
+
+</body>
+
+</html>

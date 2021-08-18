@@ -1,0 +1,42 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgb(248, 131, 131);
+    text-align: center;
+
+    justify-content: center;
+    align-items: center;
+}
+.errors {
+    color: red;
+    margin-bottom: 10px;
+}
+.Count{
+    font-size: 150%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.counter {
+    font-size: 150%;
+  
+} 
+.language-greet {
+  margin-top: 10px;
+  margin-bottom: 20px; 
+
+}
+
+.greet-output {
+     margin-top: 15px;
+     margin-bottom: 10px;
+    text-transform: capitalize;
+}
+.Greet-Me {
+    margin-top: 0.5px;
+    border-radius: 16px;
+
+}
+
+.Clear {
+    margin-top: 0.5px;
+    border-radius: 16px;
+}
+

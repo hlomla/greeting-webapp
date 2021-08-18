@@ -1,0 +1,61 @@
+body{
+    text-align: center;
+    background: linear-gradient(-200deg, #9b3674 10%, rgba(196, 93, 170, 0) 90%); 
+}
+
+.container{
+    height:400px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    background: rgb(182, 51, 73);
+    border-radius: 30px;
+}
+
+.container{
+    filter: blur(0.6px);
+    box-shadow: 
+
+    -3px 15px 10px rgb(163, 85, 85),
+    0px 2.5px 5px  rgba(255, 255, 255),
+
+    25px 20px 10px rgb(163, 85, 85),
+
+    -10px 20px 30px rgba(255, 255, 255),
+
+    20px 20px 20px rgba(255, 255, 255);
+}
+.errors {
+    color: red;
+    margin-bottom: 10px;
+}
+.Count{
+    font-size: 150%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.counter {
+    font-size: 150%;
+  
+} 
+.language-greet {
+  margin-top: 10px;
+  margin-bottom: 20px; 
+
+}
+
+.greet-output {
+     margin-top: 15px;
+     margin-bottom: 10px;
+    text-transform: capitalize;
+}
+.Greet-Me {
+    margin-top: 0.5px;
+    border-radius: 16px;
+
+}
+
+.Clear {
+    margin-top: 0.5px;
+    border-radius: 16px;
+}
+
