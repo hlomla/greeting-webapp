@@ -1,6 +1,11 @@
+
 let express = require('express')
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const connectFlash = require('connect-flash');
+const flash = require('express-flash');
+const session = require('express-session');
+
 const greetings = require('./greetings')
 const Greet = greetings()
 
@@ -12,6 +17,22 @@ const handlebarSetup = exphbs({
     layoutsDir: './views/layouts'
 });
 
+app.use(session({
+    secret : "<add a secret string here>",
+    resave: false,
+    saveUninitialized: true
+  }));
+
+
+//  var x = async function(){
+//   var users = await pool.query('select * from users');    
+//   return users.rows
+//   }
+
+//   await x()
+
+app.use(flash());
+
 app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
 
@@ -22,23 +43,32 @@ app.use(express.static('public'));
 
 app.get('/', function (req, res) {
 
-
     res.render('index', {
-        
+
         counter: Greet.greetingsCounter(),
         theNames: Greet.getUserName(),
         output: Greet.languageSelected()
     })
+    
 })
 
-app.post('/', function (req, res) {  
-        
-         Greet.setUserName(req.body.theNames);
-         Greet.setLanguage(req.body.language);
-         Greet.pushName(req.body.theNames);
-         Greet.greetingsCounter()
-         
-         res.redirect('/')
+app.post('/', function (req, res) {
+var name = req.body.theNames;
+    if(name ===""){
+        req.flash('error', Greet.errorMsg());
+
+    }else{
+        Greet.setUserName(name);
+        Greet.setLanguage(req.body.language);
+        Greet.pushName(name);
+        Greet.greetingsCounter()
+    }
+   
+
+    // req.flash('message', Greet.errorMsg())
+
+    res.redirect('/')
+    
 });
 
 app.post('/action', function (req, res) {
@@ -48,13 +78,20 @@ app.post('/action', function (req, res) {
     res.redirect('/')
 })
 
-app.get('/counter', function (req, res) {
+app.get('/greeted', function (req, res) {
 
-    res.redirect('/')
+    let namesGreeted = Greet.getNameList();
+    res.render('userList', { listOfNames: namesGreeted })
 })
 
-app.post('/counter/<USER_NAME>', function (req, res) {
+app.get('/counter/:theNames', function (req, res) {
 
+    let greetedName = req.params.theNames;
+    let namesGreeted = Greet.getNameList();
+    res.render('timesGreeted', {
+        name: greetedName,
+        counter: namesGreeted[greetedName]
+    })
 })
 
 let PORT = process.env.PORT || 3018;

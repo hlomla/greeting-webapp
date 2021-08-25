@@ -1,8 +1,11 @@
 module.exports = function Greet(name) {
 
-    var nameList = name || [];
+
+    //create map to store names
+    var namesList = {};
     var languages;
     var User = "";
+
 
     function setLanguage(lang) {
         languages = lang;
@@ -33,19 +36,23 @@ module.exports = function Greet(name) {
         }
     }
 
-
-    function pushName(myName) {
+//store names in the object map
+    function pushName(name) {
+        
         // let name = myName.charAt(0).toUpperCase() + myName.slice(1).toLowerCase()
-        if (!nameList.includes(myName)) {
-            nameList.push(myName)
+        if (namesList[name] === undefined) {
+            namesList[name] = 1
+        }
+        else {
+            namesList[name]++
         }
     }
     function getNameList() {
-        return nameList;
+        return namesList;
     }
 
-    function greetingsCounter() {
-        return nameList.length;
+    function greetingsCounter() {   
+        return Object.keys(namesList).length;
     }
 
     function errorMsg(language, myName) {
