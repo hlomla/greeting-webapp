@@ -39,12 +39,12 @@ module.exports = function Greet(name) {
 //store names in the object map
     function pushName(name) {
         
-        // let name = myName.charAt(0).toUpperCase() + myName.slice(1).toLowerCase()
-        if (namesList[name] === undefined) {
-            namesList[name] = 1
+        let names = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+        if (namesList[names] === undefined) {
+            namesList[names] = 1
         }
         else {
-            namesList[name]++
+            namesList[names]++
         }
     }
     function getNameList() {

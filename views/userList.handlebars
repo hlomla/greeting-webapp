@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,24 +9,29 @@
     <link rel="stylesheet" href="/css/simple-grid.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
     <h1>Names Greeted</h1>
-<div class="list"  text-align="center">
-    
+    <div class="list" text-align="center">
 
-    <table>
-        <tr>
 
-            <th>Names</th>
+        <table>
+            <tr>
 
-        </tr>
-        {{#each listOfNames}}
-        <tr>
-            <td><a href="/counter/{{@key}}">{{@key}}</a></td>
-        </tr>
-        {{/each}}
-    </table>
-</div>
+                <th>Names</th>
+
+            </tr>
+            {{#each listOfNames}}
+            <tr>
+                <td><a href="/counter/{{@key}}">{{@key}}</a></td>
+            </tr>
+            {{/each}}
+        </table>
+        <div class="nextRoute">
+            <a href="/">Home</a>
+        </div>
+    </div>
 </body>
+
 </html>
