@@ -63,6 +63,9 @@ body{
     text-align: center;
     text-decoration-color: aliceblue;
 }
+.nextRoute{
+    margin-left: -190px;
+}
 .list{
     margin-left: 211px;
     font-size: large;
