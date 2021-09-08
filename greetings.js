@@ -97,6 +97,20 @@ module.exports = function Greet(pool) {
     async function greetingsCounter() {
         var nameList = pool.query('select names from usergreet');
         return nameList.rowCount;
+
+        // async function getForEach(name) {
+        //     const db = await pool.query('SELECT count FROM greetedNames WHERE userName = $1', [name]);
+        //     return db.rows[0].count;
+        // }
+
+        // async function (req, res) {
+        //     var name = req.params.username;
+        //     var nameCount = await greetInsta.getForEach(name)
+        //     res.render("counter", {
+        //         name,
+        //         nameCount
+        //     });
+        // }
     }
 
     function errorMsg(language, myName) {
