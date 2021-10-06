@@ -112,7 +112,7 @@ app.get('/the-route', function (req, res) {
     res.redirect('/');
 });
 
-let PORT = process.env.PORT || 3001;
+let PORT = process.env.PORT || 3002;
 
 app.listen(PORT, function () {
     console.log("App started at PORT: ", PORT);
