@@ -36,10 +36,7 @@ body {
 }
 
 .Clear {
-    display: inline-block;
-    justify-content: center;
-    align-content: center;
-    margin-top: 10.5px;
+    margin-top: 0.5px;
     border-radius: 16px;
 }
 
