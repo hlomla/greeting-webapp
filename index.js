@@ -3,7 +3,7 @@ let express = require('express')
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const connectFlash = require('connect-flash');
-const flash = require('express-flash');
+const { flash } = require('express-flash-message');
 const session = require('express-session');
 const greetings = require('./greetings')
 const pg = require("pg");
@@ -15,7 +15,7 @@ if (process.env.DATABASE_URL && !local){
     useSSL = true;
 } 
 
-const connectionString = process.env.DATABASE_URL || 'postgres://maiddfwghvrgfr:874ae728e9a1583559274f86b9016c0cf67f10d9c196061dcdf7ad3d8f10fdc7@ec2-54-211-160-34.compute-1.amazonaws.com:5432/d2dq9br6opem1b';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:codex123@localhost:5432/my_database';
 
 const pool = new Pool({
     connectionString,
@@ -24,6 +24,8 @@ const pool = new Pool({
 
 
 const Greet = greetings(pool)
+
+pool
 
 
 let app = express()
@@ -45,47 +47,42 @@ app.use(session({
     saveUninitialized: true
   }));
 
+app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.use(express.static('public'));
 
 app.get('/', async function (req, res) {
-console.log("the counter ==> "+ await Greet.allUser());
-
-    res.render('index', {
-
+    res.render('index', {     
         counter: await Greet.allUser(),
-        theNames: await Greet.insertNames(),
-        output: await Greet.languageSelected()
+        // theNames: await Greet.insertNames(),
+        // output: await Greet.languageSelected()
     })
     
 })
 
-app.post('/greet', async function (req, res) {
+
+app.post('/', async function (req, res) {
 var name = req.body.theNames
 
-// console.log(name + "Sdsdsdsddsds");
-    if(name ===""){
-        req.flash('error', await Greet.errorMsg());
+    if(name === ""){
+        req.flash('error',  await Greet.errorMsg());
 
     }else{
        await Greet.insertNames(name);
        Greet.setLanguage(req.body.language);
-       Greet.setUserName(name)
-    //    console.log('the message is ' + await Greet.languageSelected())
-    //    await Greet.pushName(name);
-    //    await Greet.greetingsCounter()
+       Greet.setUserName(name);
     }
-   
-
-    // req.flash('message', Greet.errorMsg())
-
-    res.redirect('/')
-    
+    res.render('index', {     
+        counter: await Greet.allUser(),
+        // theNames: await Greet.insertNames(),
+        output: await Greet.languageSelected(req.body.language, name)
+    })
+    // res.redirect('/')  
 });
 
 app.post('/action', function (req, res) {
 
-    console.log(req.body.language)
+    // console.log(req.body.language)
     res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
     res.redirect('/')
 })
@@ -96,18 +93,48 @@ app.get('/greeted', async function (req, res) {
     res.render('userList', { listOfNames: namesGreeted })
 })
 
-app.get('/counter/:theNames', function (req, res) {
-
+app.get('/counter/:theNames', async function (req, res) {
     let greetedName = req.params.theNames;
-    let namesGreeted = Greet.getNameList();
+    let greetedCounts = await Greet.greetingsCounter(greetedName);
+
     res.render('timesGreeted', {
-        name: greetedName,
-        counter: namesGreeted[greetedName]
+        greetedName,
+        greetedCounts
     })
 })
+
+app.post('/resetBtn', async function(req, res){
+    await Greet.resetBtn();
+    res.redirect('/');
+})
+app.get('/the-route', function (req, res) {
+    // req.flash('error',  await Greet.errorMsg());
+    res.redirect('/');
+});
 
 let PORT = process.env.PORT || 3001;
 
 app.listen(PORT, function () {
     console.log("App started at PORT: ", PORT);
 });
+
+
+// try {
+//     const errFlash = {
+//         language: req.body.language,
+//         myName: req.body.theNames
+//     }
+//     if (language === null && myName.trim().length === 0) {
+//         req.flash("error","Please enter name and select language!")
+//     }
+
+//     else if (!myName || myName.trim().length === 0) {
+//         req.flash("error", "Please enter name!") 
+//     }
+//     else if (language === null) {
+//         req.flash("error", "Please select a language!")
+//     }
+// } catch (error) {
+//     console.log('flash has an error')
+// }
+// }
