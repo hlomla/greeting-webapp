@@ -8,6 +8,6 @@ node_js:
   - "8.9.4"
 before_script:
   - psql -c 'create database  my_database;' -U postgres
-  - psql -U postgres -d my_database -a -f tables.sql
+  - psql -U postgres -d my_database -a -f my_database.sql
 services:
   - postgresql
