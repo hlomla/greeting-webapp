@@ -21,10 +21,12 @@ const greeted = new greetings(pool)
 
 describe('Greetings', function () {
     beforeEach(async function () {
-        // clean the tables before each test run
-        await pool.query("delete from usergreet;");
-
-    });
+        try {
+            await pool.query("delete from usergreet"); 
+        } catch (error) {
+            console.log('**********')
+        }
+    })
     describe('Return greetings in language selected', function () {
         it('should be able to return greetings in isiXhosa and return a name', async function () {
             let greeted = greetings();
