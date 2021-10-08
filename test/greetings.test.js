@@ -86,155 +86,111 @@ describe('Greetings', function () {
     describe('Return the list of people greeted', function () {
         it('should be able to return the list of people greeted', async function () {
             let greeted = greetings(pool);
-            
+
             await greeted.insertNames('Hlomla');
             await greeted.insertNames('Sam');
             await greeted.insertNames('Freddy');
 
-            await greeted.getNameList(['Hlomla', 'Sam', 'Freddy']);
+            let rawNameArr = await greeted.getNameList(['Hlomla', 'Freddy', 'Sam']);
+            let isoNameArr = [];
 
-            assert.deepEqual( await greeted.getNameList(['Hlomla', 'Sam', 'Freddy']), await greeted.getNameList(['Hlomla', 'Sam', 'Freddy']))
-        
+            for (let i = 0; i < rawNameArr.length; i++) {
+                isoNameArr[i] = rawNameArr[i].names;
+            }
+
+            assert.deepEqual(isoNameArr, ['Freddy', 'Hlomla', 'Sam']);
+
         });
         it('should be able to return the list of people greeted when one person is greeted twice', async function () {
             let greeted = greetings(pool);
-            
+
             await greeted.insertNames('Hlomla');
             await greeted.insertNames('Freddy');
             await greeted.insertNames('Freddy');
 
-            await greeted.getNameList(['Hlomla', 'Freddy']);
+            let rawNameArr = await greeted.getNameList(['Hlomla', 'Freddy']);
+            let isoNameArr = [];
 
-            assert.deepEqual( await greeted.getNameList(['Hlomla', 'Freddy']), await greeted.getNameList(['Hlomla', 'Freddy']))
-        
+            for (let i = 0; i < rawNameArr.length; i++) {
+                isoNameArr[i] = rawNameArr[i].names;
+            }
+
+            assert.deepEqual(isoNameArr, ['Freddy', 'Hlomla']);
+
         });
     })
+    describe('Return how many times a user was greeted', function () {
+        it('should be able to return the how many times a person got greeted', async function () {
+            let greeted = greetings(pool);
+
+            await greeted.insertNames('Hlomla');
+            await greeted.insertNames('Hlomla');
+            await greeted.insertNames('Hlomla');
+
+            await greeted.languageSelected('isiXhosa', 'Hlomla');
+            await greeted.languageSelected('English', 'Hlomla');
+            await greeted.languageSelected('Greek', 'Hlomla');
+            
+            let rawNameArr = await greeted.getNameList(['Hlomla']);
+            let isoNameArr = [];
+
+            for (let i = 0; i < rawNameArr.length; i++) {
+                isoNameArr[i] = rawNameArr[i].counts;
+            }
+
+            assert.equal(isoNameArr, 3)
+        });
+        it('should be able to return the how many times a person got greeted', async function () {
+            let greeted = greetings(pool);
+
+            await greeted.insertNames('Okuhle');
+            await greeted.insertNames('Okuhle');
+            
+
+            await greeted.languageSelected('isiXhosa', 'Okuhle');
+            await greeted.languageSelected('English', 'Okuhle');
+            
+            
+            let rawNameArr = await greeted.getNameList(['Okuhle']);
+            let isoNameArr = [];
+
+            for (let i = 0; i < rawNameArr.length; i++) {
+                isoNameArr[i] = rawNameArr[i].counts;
+            }
+
+            assert.equal(isoNameArr, 2)
+        });
+        it('should be able to return the how many times a person got greeted', async function () {
+            let greeted = greetings(pool);
+
+            await greeted.insertNames('Xabiso');
+            await greeted.insertNames('Xabiso');
+            await greeted.insertNames('Xabiso');
+            await greeted.insertNames('Xabiso');
+            
+
+            await greeted.languageSelected('isiXhosa', 'Xabiso');
+            await greeted.languageSelected('English', 'Xabiso');
+            await greeted.languageSelected('isiXhosa', 'Xabiso');
+            await greeted.languageSelected('Greek', 'Xabiso');
+            
+            
+            let rawNameArr = await greeted.getNameList(['Xabiso']);
+            let isoNameArr = [];
+
+            for (let i = 0; i < rawNameArr.length; i++) {
+                isoNameArr[i] = rawNameArr[i].counts;
+            }
+
+            assert.equal(isoNameArr, 4)
+        });
+    });
+
     after(function () {
         pool.end();
     })
 })
 
-
-// describe('Greeting Factory Function', function () {
-
-//     describe('Return name value when person greeted in language selected', function () {
-//         beforeEach(async function(){
-//             // clean the tables before each test run
-//             await pool.query("delete from usergreet;");
-
-//         });
-    //     it('should be able to return greetings in isiXhosa and return name', function () {
-    //         let greeted = Greet();
-
-    //         greeted.languageSelected('myName')
-
-    //         assert.equal('Molo, Hlomla', greeted.languageSelected('isiXhosa', 'Hlomla'))
-
-    //     });
-    //     it('should be able to return greetings in English and return name', function () {
-    //         let greeted = Greet();
-
-    //         greeted.languageSelected('myName')
-
-    //         assert.equal('Hello, Thandie', greeted.languageSelected('English', 'Thandie'))
-    //     });
-    //     it('should be able to return greetings in Greek and return name', function () {
-    //         let greeted = Greet();
-    //         greeted.languageSelected('myName')
-
-    //         assert.equal('Geia, Freddy', greeted.languageSelected('Greek', 'Freddy'))
-    //     });
-    // });
-    // describe('Return the count number of people greeted', function () {
-    //     it('should be able to return the count number when one person greeted', function () {
-    //         let greeted = Greet();
-
-    //         greeted.setName('Freddy')
-    //         greeted.languageSelected('Greek', 'Freddy')
-
-    //         assert.equal(1, greeted.greetingsCounter())
-
-    //     });
-    //     it('should be able to return the count number when one person is greeted twice in a different language', function () {
-    //         let greeted = Greet();
-
-    //         greeted.setName('Fred')
-    //         greeted.setName('Fred')
-
-    //         greeted.languageSelected('Greek', 'Fred')
-    //         greeted.languageSelected('isiXhosa', 'Fred')
-
-    //         assert.equal(1, greeted.greetingsCounter())
-
-    //     });
-    //     it('should be able to return the count number when different people are greeted in a different languages', function () {
-    //         let greeted = Greet();
-
-    //         greeted.setName('Okuhle')
-    //         greeted.setName('Sam')
-    //         greeted.setName('Samantha')
-    //         greeted.setName('Dean')
-
-    //         greeted.languageSelected('Greek', 'Okuhle')
-    //         greeted.languageSelected('isiXhosa', 'Sam')
-    //         greeted.languageSelected('isiXhosa', 'Samantha')
-    //         greeted.languageSelected('English', 'Dean')
-
-    //         assert.equal(4, greeted.greetingsCounter())
-
-    //     });
-    //     describe('Return name list of people greeted', function () {
-    //         it('should be able to return the list of people who were greeted', function () {
-    //             let greeted = Greet();
-
-    //             greeted.setName('Hlomla')
-    //             greeted.setName('Sam')
-    //             greeted.setName('Freddy')
-    //             greeted.setName('Monica')
-
-    //             greeted.getNameList(['Hlomla', 'Sam', 'Freddy', 'Monica'])
-
-    //             assert.deepEqual(['Hlomla', 'Sam', 'Freddy', 'Monica'], greeted.getNameList(['Hlomla', 'Sam', 'Freddy', 'Monica']))
-
-    //         });
-    //         it('should be able to return the list of people who were greeted if one person was greeted twice', function () {
-    //             let greeted = Greet();
-
-    //             greeted.setName('Hlomla')
-    //             greeted.setName('Hlomla')
-    //             greeted.setName('Fred')
-    //             greeted.setName('Sally')
-
-    //             greeted.getNameList(['Hlomla', 'Fred', 'Monica'])
-
-    //             assert.deepEqual(['Hlomla', 'Fred', 'Sally'], greeted.getNameList(['Hlomla', 'Fred', 'Sally']))
-
-    //         });
-
-    // it('should be able to return an error when language is not selected', function () {
-    //     let greeted = Greet();
-
-    //     assert.equal('Please select a language!',   greeted.errorMsg(null, "Okuhle" ))
-    // });
-    // it('should be able to return an error when name is not entered', function () {
-    //     let greeted = Greet();
-    //     greeted.errorMsg(null,' ')
-
-    //     assert.equal('Please enter name!',   greeted.errorMsg(' '))
-    // });
-            // describe('Return errors', function () {
-            //     it('should be able to return an error when language and name is not entered', function () {
-            //         let greeted = Greet();
-            //         greeted.errorMsg(null, ' ')
-
-
-            //         assert.equal('Please enter name and select language!',   greeted.errorMsg(null, ' '))
-            //     });
-
-            // });
-//         });
-//     })
-// })
 
 
 

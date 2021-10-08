@@ -84,14 +84,11 @@ module.exports = function Greet(pool) {
             var dtCounts = {};
             for (var i = 0; i < namesList.rows.length; i++) {
                 dtCounts['names'] = namesList.rows.names;
-                console.log(dtCounts)
                 dtCounts['counts'] = namesList.rows.counts;
                 if (namesList === name) {
-                    console.log(dtCounts)
                     dtCounts = namesList.rows[i];
                 }
             }
-          
             return namesList.rows
         }
     }
@@ -104,17 +101,17 @@ module.exports = function Greet(pool) {
 
 
 
-     async function errorMsg(language, myName) {
+     async function errorMsg(lang, name) {
 
-        if (language === null && myName.trim().length === 0) {
+        if (lang === null && name.trim().length === 0) {
             return "Please enter name and select language!"
         }
 
-        if (!myName || myName.trim().length === 0) {
+        if (!name || name.trim().length === 0) {
             return "Please enter name!"
         }
 
-        if (language === null) {
+        if (lang === null) {
             return "Please select a language!"
         }
         return '';

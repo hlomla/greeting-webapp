@@ -11,26 +11,15 @@
 </head>
 
 <body>
-
-    <h1>Names Greeted</h1>
-    <div class="list" text-align="center">
-
-
-        <table>
-            <tr>
-
-                <th>Names</th>
-    
-            </tr>
+    <h1 style="margin: 20px 0 0 0;">Names Greeted</h1>
+    <div class="list">
+                <h3 style="margin-bottom: 10px;">Names</h3>
             {{#each listOfNames}}
-            <tr>
-                <td><a href="/counter/{{names}}">{{names}}</a></td>
-            </tr>
+                <a href="/counter/{{names}}">{{names}}</a>
             {{/each}}
-        </table>
-        <div class="nextRoute">
-            <a href="/">Home</a>
-        </div>
+    </div>
+    <div class="nextRoute" style="  font-size: large; text-decoration-color: black;">
+        <a href="/">Home</a>
     </div>
 </body>
 

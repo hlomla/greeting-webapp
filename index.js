@@ -54,8 +54,6 @@ app.use(express.static('public'));
 app.get('/', async function (req, res) {
     res.render('index', {     
         counter: await Greet.allUser(),
-        // theNames: await Greet.insertNames(),
-        // output: await Greet.languageSelected()
     })
     
 })
@@ -74,15 +72,11 @@ var name = req.body.theNames
     }
     res.render('index', {     
         counter: await Greet.allUser(),
-        // theNames: await Greet.insertNames(),
         output: await Greet.languageSelected(req.body.language, name)
-    })
-    // res.redirect('/')  
+    }) 
 });
 
 app.post('/action', function (req, res) {
-
-    // console.log(req.body.language)
     res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
     res.redirect('/')
 })
@@ -103,26 +97,15 @@ app.get('/counter/:theNames', async function (req, res) {
     })
 })
 
-app.post('/resetBtn', async function(req, res){
+app.get('/resetBtn', async function(req, res){
     await Greet.resetBtn();
     res.redirect('/');
 })
-app.get('/the-route', function (req, res) {
-    // req.flash('error',  await Greet.errorMsg());
-    res.redirect('/');
-});
-
-let PORT = process.env.PORT || 3002;
-
-app.listen(PORT, function () {
-    console.log("App started at PORT: ", PORT);
-});
-
-
-// try {
+// app.get('/the-route', function (req, res) {
+//     try {
 //     const errFlash = {
 //         language: req.body.language,
-//         myName: req.body.theNames
+//         name: req.body.theNames
 //     }
 //     if (language === null && myName.trim().length === 0) {
 //         req.flash("error","Please enter name and select language!")
@@ -136,5 +119,15 @@ app.listen(PORT, function () {
 //     }
 // } catch (error) {
 //     console.log('flash has an error')
+
 // }
-// }
+//     res.redirect('/');
+// });
+
+let PORT = process.env.PORT || 3002;
+
+app.listen(PORT, function () {
+    console.log("App started at PORT: ", PORT);
+});
+
+
