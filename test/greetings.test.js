@@ -12,10 +12,11 @@ if (process.env.DATABASE_URL && !local) {
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://codex:codex123@localhost:5432/my_database';
 
+
 const pool = new Pool({
-    connectionString
-    // ssl: useSSL
-});
+    connectionString,
+    ssl:{ rejectUnauthorized: false}    
+  });
 
 const greeted = new greetings(pool)
 
