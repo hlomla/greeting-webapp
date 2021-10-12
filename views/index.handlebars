@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-12">
             <div class="errors">
-                <h1>{{messages.error}}</h1>
+                <h1 class="error">{{error}}</h1>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
         <form action="/" method="POST">
 
             <label for="name">Name:</label><br>
-            <input type="text" id="name" name="theNames" class="name-input" value=""><br>
+            <input type="text" id="name" name="theNames" class="name-input" required value=""><br>
 
             <span class="counter">
                 Count :
@@ -48,13 +48,13 @@
             </span>
             <div class="row">
 
-                <input type="radio" id="" name="language" value="isiXhosa">
+                <input type="radio" id="" name="language" required value="isiXhosa">
                 <label for="isiXhosa">isiXhosa</label>
 
-                <input type="radio" id="" name="language" value="Greek">
+                <input type="radio" id="" name="language" required value="Greek">
                 <label for="Greek">Greek</label>
 
-                <input type="radio" id="" name="language" value="English">
+                <input type="radio" id="" name="language" required value="English">
                 <label for="English">English</label>
             </div>
 

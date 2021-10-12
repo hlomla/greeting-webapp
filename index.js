@@ -25,7 +25,7 @@ const pool = new Pool({
 
 const Greet = greetings(pool)
 
-pool
+// pool
 
 
 let app = express()
@@ -52,6 +52,7 @@ app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.use(express.static('public'));
 
 app.get('/', async function (req, res) {
+ 
     res.render('index', {     
         counter: await Greet.allUser(),
     })
@@ -61,14 +62,14 @@ app.get('/', async function (req, res) {
 
 app.post('/', async function (req, res) {
 var name = req.body.theNames
+var lang = req.body.language
 
-    if(name === ""){
-        req.flash('error',  await Greet.errorMsg());
-
+    if(name === ''){
+        console.log(await Greet.errorMsg(lang, name));
+        req.flash('error', await Greet.errorMsg(lang, name));
+        // res.redirect('/');
     }else{
        await Greet.insertNames(name);
-       Greet.setLanguage(req.body.language);
-       Greet.setUserName(name);
     }
     res.render('index', {     
         counter: await Greet.allUser(),
@@ -77,7 +78,7 @@ var name = req.body.theNames
 });
 
 app.post('/action', function (req, res) {
-    res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
+   // res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
     res.redirect('/')
 })
 
@@ -90,10 +91,9 @@ app.get('/greeted', async function (req, res) {
 app.get('/counter/:theNames', async function (req, res) {
     let greetedName = req.params.theNames;
     let greetedCounts = await Greet.greetingsCounter(greetedName);
-
     res.render('timesGreeted', {
-        greetedName,
-        greetedCounts
+        names : greetedName,
+        counts : greetedCounts
     })
 })
 
@@ -101,21 +101,23 @@ app.get('/resetBtn', async function(req, res){
     await Greet.resetBtn();
     res.redirect('/');
 })
+
 // app.get('/the-route', function (req, res) {
+//     var name = req.body.theNames
+//     var lang = req.body.language
 //     try {
 //     const errFlash = {
-//         language: req.body.language,
-//         name: req.body.theNames
+//         lang, 
+//         name
 //     }
-//     if (language === null && myName.trim().length === 0) {
-//         req.flash("error","Please enter name and select language!")
+//     if(name === ''){
+//         req.flash('error', 'Please enter a name!')
 //     }
-
-//     else if (!myName || myName.trim().length === 0) {
-//         req.flash("error", "Please enter name!") 
+//     else if( lang === null){
+//         req.flash('error', 'Please select a language!')
 //     }
-//     else if (language === null) {
-//         req.flash("error", "Please select a language!")
+//     else if( lang === null && name === ''){
+//         req.flash('error', 'Please enter a name and select a language')
 //     }
 // } catch (error) {
 //     console.log('flash has an error')

@@ -1,20 +1,16 @@
 module.exports = function Greet(pool) {
-
-
-    //create map to store names
     var namesList = {};
     var languages;
     var User = "";
-   
 
     async function insertNames(users) {
 
         try {
             var people = users.charAt(0).toUpperCase() + users.slice(1).toLowerCase();
-            
-            var ifNameExist = await pool.query('select names from usergreet where names=$1', [people])
+            var ifNameExist = await pool.query('select names from usergreet where names=$1', [people]);
+
             if (ifNameExist.rowCount === 0) {
-            
+
                 await pool.query('insert into usergreet(names,counts) values($1,$2)', [people, 1])
             }
             else {
@@ -26,10 +22,8 @@ module.exports = function Greet(pool) {
 
     }
 
-
     async function allUser() {
         try {
-
             let totalNames = await pool.query("select * from userGreet")
             return totalNames.rows.length
         } catch (error) {
@@ -37,27 +31,7 @@ module.exports = function Greet(pool) {
         }
     }
 
-
-    function setLanguage(lang) {
-        languages = lang;
-
-    }
-
-    async function getLanguage() {
-        return languages;
-    }
-
-    async function setUserName(names) {
-        User = names;
-    }
-
-    async function getUserName() {
-        return User;
-
-    }
-
     async function languageSelected(lang, name) {
-        // var lang = languages
         var name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
         if (lang === "isiXhosa") {
@@ -78,19 +52,8 @@ module.exports = function Greet(pool) {
 
     async function greetingsCounter(name) {
         var namesList = await pool.query('select * from usergreet WHERE names =$1', [name]);
-        
 
-        if (name) {
-            var dtCounts = {};
-            for (var i = 0; i < namesList.rows.length; i++) {
-                dtCounts['names'] = namesList.rows.names;
-                dtCounts['counts'] = namesList.rows.counts;
-                if (namesList === name) {
-                    dtCounts = namesList.rows[i];
-                }
-            }
-            return namesList.rows
-        }
+        return namesList.rows[0].counts
     }
 
     async function getForEach(name) {
@@ -98,24 +61,24 @@ module.exports = function Greet(pool) {
         return db.rows[0].count;
     }
 
+    async function errorMsg(lang, name) {
+        try {
+            if (lang === null && name.trim().length === 0) {
+                return "Please enter name and select language!"
+            }
 
+            if (!name || name.trim().length === 0) {
+                return "Please enter name!"
+            }
 
-
-     async function errorMsg(lang, name) {
-
-        if (lang === null && name.trim().length === 0) {
-            return "Please enter name and select language!"
+            if (lang === null) {
+                return "Please select a language!"
+            }
+        } catch (error) {
+            console.log("flash messages in progress")
         }
-
-        if (!name || name.trim().length === 0) {
-            return "Please enter name!"
-        }
-
-        if (lang === null) {
-            return "Please select a language!"
-        }
-        return '';
     }
+
     function timeOutErr() {
         return ""
     }
@@ -123,10 +86,6 @@ module.exports = function Greet(pool) {
         await pool.query('DELETE FROM usergreet')
     }
     return {
-        setLanguage,
-        getLanguage,
-        setUserName,
-        getUserName,
         getForEach,
         greetingsCounter,
         languageSelected,
