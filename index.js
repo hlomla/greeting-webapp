@@ -78,7 +78,7 @@ var lang = req.body.language
     else{
        await Greet.insertNames(name);
        (lang === lang && name === name )
-       req.flash('Success', 'Name is added successfully!')
+       req.flash('success', 'Name is added successfully!')
     }
     res.render('index', {     
         counter: await Greet.allUser(),
