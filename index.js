@@ -3,7 +3,7 @@ let express = require('express')
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const connectFlash = require('connect-flash');
-const { flash } = require('express-flash-message');
+const flash = require('express-flash');
 const session = require('express-session');
 const greetings = require('./greetings')
 const pg = require("pg");
@@ -59,17 +59,26 @@ app.get('/', async function (req, res) {
     
 })
 
+//app.post('/', greetRoutes.root
 
 app.post('/', async function (req, res) {
 var name = req.body.theNames
 var lang = req.body.language
 
-    if(name === ''){
-        console.log(await Greet.errorMsg(lang, name));
-        req.flash('error', await Greet.errorMsg(lang, name));
-        // res.redirect('/');
-    }else{
+   //
+    console.log(name);
+    if(!name){
+        // console.log(lang);
+    req.flash('error', 'Please enter a name!');
+    }
+    else if(!lang){
+      
+            req.flash('error', 'Please select a language!')    
+}
+    else{
        await Greet.insertNames(name);
+       (lang === lang && name === name )
+       req.flash('Success', 'Name is added successfully!')
     }
     res.render('index', {     
         counter: await Greet.allUser(),
@@ -102,31 +111,7 @@ app.get('/resetBtn', async function(req, res){
     res.redirect('/');
 })
 
-// app.get('/the-route', function (req, res) {
-//     var name = req.body.theNames
-//     var lang = req.body.language
-//     try {
-//     const errFlash = {
-//         lang, 
-//         name
-//     }
-//     if(name === ''){
-//         req.flash('error', 'Please enter a name!')
-//     }
-//     else if( lang === null){
-//         req.flash('error', 'Please select a language!')
-//     }
-//     else if( lang === null && name === ''){
-//         req.flash('error', 'Please enter a name and select a language')
-//     }
-// } catch (error) {
-//     console.log('flash has an error')
-
-// }
-//     res.redirect('/');
-// });
-
-let PORT = process.env.PORT || 3002;
+let PORT = process.env.PORT || 3885;
 
 app.listen(PORT, function () {
     console.log("App started at PORT: ", PORT);

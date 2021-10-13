@@ -46,7 +46,7 @@ module.exports = function Greet(pool) {
     }
 
     async function getNameList() {
-        let userList = await pool.query('SELECT * FROM usergreet ORDER BY names')
+        let userList = await pool.query('SELECT names,counts FROM usergreet ORDER BY names')
         return userList.rows;
     }
 
@@ -56,13 +56,9 @@ module.exports = function Greet(pool) {
         return namesList.rows[0].counts
     }
 
-    async function getForEach(name) {
-        const db = await pool.query('SELECT count FROM greetedNames WHERE userName = $1', [name]);
-        return db.rows[0].count;
-    }
-
     async function errorMsg(lang, name) {
         try {
+            console.log(name)
             if (lang === null && name.trim().length === 0) {
                 return "Please enter name and select language!"
             }
@@ -86,7 +82,6 @@ module.exports = function Greet(pool) {
         await pool.query('DELETE FROM usergreet')
     }
     return {
-        getForEach,
         greetingsCounter,
         languageSelected,
         getNameList,

@@ -31,21 +31,15 @@ describe('Greetings', function () {
         it('should be able to return greetings in isiXhosa and return a name', async function () {
             let greeted = greetings();
 
-            await greeted.languageSelected('lang', 'name')
-
             assert.equal('Molo, Hlomla', await greeted.languageSelected('isiXhosa', 'Hlomla'))
         });
         it('should be able to return greetings in English and return a name', async function () {
             let greeted = greetings();
 
-            await greeted.languageSelected('lang', 'name')
-
             assert.equal('Hello, Okuhle', await greeted.languageSelected('English', 'Okuhle'))
         });
         it('should be able to return greetings in Greek and return a name', async function () {
             let greeted = greetings();
-
-            await greeted.languageSelected('lang', 'name')
 
             assert.equal('Geia, Busi', await greeted.languageSelected('Greek', 'Busi'))
         });
@@ -94,13 +88,15 @@ describe('Greetings', function () {
             await greeted.insertNames('Freddy');
 
             let rawNameArr = await greeted.getNameList(['Hlomla', 'Freddy', 'Sam']);
-            let isoNameArr = [];
+        
 
-            for (let i = 0; i < rawNameArr.length; i++) {
-                isoNameArr[i] = rawNameArr[i].names;
-            }
-
-            assert.deepEqual(isoNameArr, ['Freddy', 'Hlomla', 'Sam']);
+            assert.deepEqual(rawNameArr, [
+                
+                { names: 'Freddy', counts: 1 },
+                { names: 'Hlomla', counts: 1 },
+                { names: 'Sam', counts: 1 }
+              ]
+              );
 
         });
         it('should be able to return the list of people greeted when one person is greeted twice', async function () {
@@ -110,14 +106,10 @@ describe('Greetings', function () {
             await greeted.insertNames('Freddy');
             await greeted.insertNames('Freddy');
 
-            let rawNameArr = await greeted.getNameList(['Hlomla', 'Freddy']);
-            let isoNameArr = [];
-
-            for (let i = 0; i < rawNameArr.length; i++) {
-                isoNameArr[i] = rawNameArr[i].names;
-            }
-
-            assert.deepEqual(isoNameArr, ['Freddy', 'Hlomla']);
+            let rawNameArr = await greeted.getNameList();
+         
+            assert.deepEqual(rawNameArr, [ { names: 'Freddy', counts: 2 }, { names: 'Hlomla', counts: 1 } ]
+            );
 
         });
     })
