@@ -34,17 +34,19 @@ module.exports = function Greet(pool) {
     async function languageSelected(lang, name) {
         var name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
-        if (lang === "isiXhosa") {
+    if(name !== "" && lang !== undefined){        
+    if (lang === "isiXhosa") {
             return "Molo, " + name;
         }
-        if (lang === "Greek") {
+        else if (lang === "Greek") {
             return "Geia, " + name;
         }
-        if (lang === "English") {
+        else if (lang === "English") {
             return "Hello, " + name;
         }
+        
     }
-
+}
     async function getNameList() {
         let userList = await pool.query('SELECT names,counts FROM usergreet ORDER BY names')
         return userList.rows;

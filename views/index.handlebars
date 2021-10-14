@@ -11,108 +11,114 @@
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-12">
-            <h1>Greetings</h1>
-        </div>
-    </div>
-
-
-    <div class="row">
-      
-        <div class="col-12">
-            <div class="errors">
-             
-                <h3 class="error">{{messages.error}}</h3>
+    <div class="head-div"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Greetings</h1>
             </div>
-           
         </div>
-        
-    </div>
 
-    <div class="row">
-      
-        <div class="col-12 success" >
-            <div class="success">
-             
-                <h3 class="success">{{messages.success}}</h3>
-            </div>
-           
-        </div>
-        
-          <div class="col-12 database">
-            <div class="database">
-             
-                <h3 class="database">{{messages.key}}</h3>
-            </div>
-            
-           
-        </div>
-        
-    </div>
-    <div class="row">
-        <div class="col-8">
 
+        <div class="row">
+
+            <div class="col-12">
+                <div class="errors">
+
+                    <h3 class="error">{{messages.error}}</h3>
+                </div>
+
+            </div>
 
         </div>
 
-        <div class="col-4" class="Count">
+        <div class="row">
 
+            <div class="col-12 success">
+                <div class="success">
+
+                    <h3 class="success">{{messages.success}}</h3>
+                </div>
+
+            </div>
+
+            <div class="col-12 database">
+                <div class="database">
+
+                    <h3 class="database">{{messages.key}}</h3>
+                </div>
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="row">
-        <form action="/" method="POST">
-
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="theNames" class="name-input" value=""><br>
-
-            <span class="counter">
-                Count :
-                {{counter}}
-            </span>
-            <div class="row">
-
-                <input type="radio" id="" name="language"  value="isiXhosa">
-                <label for="isiXhosa">isiXhosa</label>
-
-                <input type="radio" id="" name="language" value="Greek">
-                <label for="Greek">Greek</label>
-
-                <input type="radio" id="" name="language" value="English">
-                <label for="English">English</label>
-            </div>
-
-            <div class="row">
-
-                <button class="Greet-Me" type="submit">Greet Me</button>
-                <a href="/resetBtn" class="Clear">Reset</a>
-
-            </div>
-
-            <div class="greet-output " text-align="center">
-                {{output}}
+        <div class="row">
+            <div class="col-8">
 
 
             </div>
-            <div class="urlNames">
 
-                <a href="/greeted">Greeted Names</a>
+            <div class="col-4" class="Count">
+
 
             </div>
-        </form>
-        {{!-- <form action="/resetBtn" method="POST">
-            <div class="row">
-                <button class="Clear" type="submit">Clear</button>
+        </div>
+        <div class="row">
+            <form action="/" method="POST">
+
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="theNames" class="name-input" value=""><br>
+
+                <span class="counter">
+                    Count :
+                    {{counter}}
+                </span>
+                <div class="row">
+
+                    <input type="radio" id="" name="language" value="isiXhosa">
+                    <label for="isiXhosa">isiXhosa</label>
+
+                    <input type="radio" id="" name="language" value="Greek">
+                    <label for="Greek">Greek</label>
+
+                    <input type="radio" id="" name="language" value="English">
+                    <label for="English">English</label>
+                </div>
+
+                <div class="row">
+
+                    <input class="btn" value="Greet" type="submit">
+                    <form action="/" method="get">
+                        <input type="submit" value="Reset" class="btn" formaction="/resetBtn">
+                    </form>
+
+
+                </div>
+
+                <div class="greet-output " text-align="center">
+                    {{output}}
+
+
+                </div>
+                <div class="urlNames">
+
+                    <a href="/greeted">Greeted Names</a>
+
+                </div>
+            </form>
+            {{!-- <form action="/resetBtn" method="POST">
+                <div class="row">
+                    <button class="Clear" type="submit">Clear</button>
+                </div>
+            </form> --}}
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+
             </div>
-        </form> --}}
-    </div>
-
-
-
-    <div class="row">
-        <div class="col-12">
-
         </div>
     </div>
 

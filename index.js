@@ -54,21 +54,14 @@ app.use(express.static('public'));
 
 app.get('/', greetingsRoutes.home)
 
-
-//app.post('/', greetRoutes.root
-
 app.post('/', greetingsRoutes.home_);
 
-// app.post('/action', function (req, res) {
-//    // res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
-//     res.redirect('/')
-// })
 
 app.get('/greeted', greetingsRoutes.greets)
 
 app.get('/counter/:theNames', greetingsRoutes.names)
 
-app.get('/resetBtn', greetingsRoutes.btnReset)
+app.post('/resetBtn', greetingsRoutes.btnReset)
 
 let PORT = process.env.PORT || 3885;
 

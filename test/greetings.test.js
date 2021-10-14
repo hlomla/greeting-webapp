@@ -65,7 +65,7 @@ describe('Greetings', function () {
 
             assert.equal(1, await greeted.allUser())
         })
-        it('should be able to return counter when different users are greeted', async function () {
+        it('it should return the count of people greeted', async function () {
             let greeted = greetings(pool);
 
             await greeted.insertNames('Hlomla')

@@ -29,14 +29,20 @@ body {
      margin-bottom: 10px;
     text-transform: capitalize;
 }
-.Greet-Me {
-    margin-top: 0.5px;
-    border-radius: 16px;
-
+/* .Greet-Me {
+    margin-top: 8.2px;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    border: 2px solid hotpink;
+    padding: 3.4px 1.5px;
 }
 
 .Clear {
-    margin-top: 0.5px;
-    border-radius: 16px;
-}
-
+    margin-top: 10.5px;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    border: 2px solid hotpink;
+    padding: 5.4px 2.5px;
+} */
