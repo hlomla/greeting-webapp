@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="/css/simple-grid.css">
      <link rel="stylesheet" href="/css/style.css">
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const errorElem = document.querySelector('.error')
+    const successElem = document.querySelector('.success')
+    const databaseElem = document.querySelector('.database')
+
+    if (errorElem.innerHTML !== '') {
+        setTimeout(function () {
+            errorElem.innerHTML = ''
+        },
+            3000);
+    }
+    if (successElem.innerHTML !== '') {
+        setTimeout(function () {
+            successElem.innerHTML = ''
+        }, 3000);
+           
+    }
+    if (databaseElem.innerHTML !== '') {
+        setTimeout(function () {
+            databaseElem.innerHTML = ''
+        }, 3000);
+           
+    }
+
+})
+</script>
 <body>
     <div class="container">
         {{{body}}}

@@ -6,6 +6,7 @@ const connectFlash = require('connect-flash');
 const flash = require('express-flash');
 const session = require('express-session');
 const greetings = require('./greetings')
+const routes = require('./greetRoutes')
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -24,8 +25,8 @@ const pool = new Pool({
 
 
 const Greet = greetings(pool)
+const greetingsRoutes = routes(Greet)
 
-// pool
 
 
 let app = express()
@@ -51,65 +52,23 @@ app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.use(express.static('public'));
 
-app.get('/', async function (req, res) {
- 
-    res.render('index', {     
-        counter: await Greet.allUser(),
-    })
-    
-})
+app.get('/', greetingsRoutes.home)
+
 
 //app.post('/', greetRoutes.root
 
-app.post('/', async function (req, res) {
-var name = req.body.theNames
-var lang = req.body.language
+app.post('/', greetingsRoutes.home_);
 
-   //
-    console.log(name);
-    if(!name){
-        // console.log(lang);
-    req.flash('error', 'Please enter a name!');
-    }
-    else if(!lang){
-      
-            req.flash('error', 'Please select a language!')    
-}
-    else{
-       await Greet.insertNames(name);
-       (lang === lang && name === name )
-       req.flash('success', 'Name is added successfully!')
-    }
-    res.render('index', {     
-        counter: await Greet.allUser(),
-        output: await Greet.languageSelected(req.body.language, name)
-    }) 
-});
+// app.post('/action', function (req, res) {
+//    // res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
+//     res.redirect('/')
+// })
 
-app.post('/action', function (req, res) {
-   // res.render('index', { output: Greet.languageSelected(req.body.language, req.body.theNames) })
-    res.redirect('/')
-})
+app.get('/greeted', greetingsRoutes.greets)
 
-app.get('/greeted', async function (req, res) {
+app.get('/counter/:theNames', greetingsRoutes.names)
 
-    let namesGreeted = await Greet.getNameList();
-    res.render('userList', { listOfNames: namesGreeted })
-})
-
-app.get('/counter/:theNames', async function (req, res) {
-    let greetedName = req.params.theNames;
-    let greetedCounts = await Greet.greetingsCounter(greetedName);
-    res.render('timesGreeted', {
-        names : greetedName,
-        counts : greetedCounts
-    })
-})
-
-app.get('/resetBtn', async function(req, res){
-    await Greet.resetBtn();
-    res.redirect('/');
-})
+app.get('/resetBtn', greetingsRoutes.btnReset)
 
 let PORT = process.env.PORT || 3885;
 

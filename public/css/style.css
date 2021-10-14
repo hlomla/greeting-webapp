@@ -29,6 +29,14 @@ body{
     color: red;
     margin-bottom: 10px;
 }
+.success {
+    color: green;
+    margin-bottom: 10px;
+}
+.database {
+    color: green;
+    margin-bottom: 10px;
+}
 .Count{
     font-size: 150%;
     font-family: Georgia, 'Times New Roman', Times, serif;

@@ -56,28 +56,6 @@ module.exports = function Greet(pool) {
         return namesList.rows[0].counts
     }
 
-    async function errorMsg(lang, name) {
-        try {
-            console.log(name)
-            if (lang === null && name.trim().length === 0) {
-                return "Please enter name and select language!"
-            }
-
-            if (!name || name.trim().length === 0) {
-                return "Please enter name!"
-            }
-
-            if (lang === null) {
-                return "Please select a language!"
-            }
-        } catch (error) {
-            console.log("flash messages in progress")
-        }
-    }
-
-    function timeOutErr() {
-        return ""
-    }
     async function resetBtn() {
         await pool.query('DELETE FROM usergreet')
     }
@@ -85,8 +63,6 @@ module.exports = function Greet(pool) {
         greetingsCounter,
         languageSelected,
         getNameList,
-        errorMsg,
-        timeOutErr,
         allUser,
         insertNames,
         resetBtn
