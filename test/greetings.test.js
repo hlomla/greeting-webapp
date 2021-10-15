@@ -1,6 +1,7 @@
 const assert = require("assert");
 const greetings = require("../greetings")
 const pg = require("pg");
+const { Console } = require("console");
 const Pool = pg.Pool;
 
 
@@ -114,69 +115,32 @@ describe('Greetings', function () {
         });
     })
     describe('Return how many times a user was greeted', function () {
-        it('should be able to return the how many times a person got greeted', async function () {
+        it('should be able to return the how counter when a person gets greeted more than twice', async function () {
             let greeted = greetings(pool);
 
             await greeted.insertNames('Hlomla');
             await greeted.insertNames('Hlomla');
             await greeted.insertNames('Hlomla');
 
-            await greeted.languageSelected('isiXhosa', 'Hlomla');
-            await greeted.languageSelected('English', 'Hlomla');
-            await greeted.languageSelected('Greek', 'Hlomla');
-            
-            let rawNameArr = await greeted.getNameList(['Hlomla']);
-            let isoNameArr = [];
-
-            for (let i = 0; i < rawNameArr.length; i++) {
-                isoNameArr[i] = rawNameArr[i].counts;
-            }
-
-            assert.equal(isoNameArr, 3)
+            assert.equal(await greeted.greetingsCounter('Hlomla'), 3)
         });
-        it('should be able to return the how many times a person got greeted', async function () {
+        it('should be able to return the how counter when a person gets greeted more than once', async function () {
             let greeted = greetings(pool);
 
             await greeted.insertNames('Okuhle');
             await greeted.insertNames('Okuhle');
-            
 
-            await greeted.languageSelected('isiXhosa', 'Okuhle');
-            await greeted.languageSelected('English', 'Okuhle');
-            
-            
-            let rawNameArr = await greeted.getNameList(['Okuhle']);
-            let isoNameArr = [];
-
-            for (let i = 0; i < rawNameArr.length; i++) {
-                isoNameArr[i] = rawNameArr[i].counts;
-            }
-
-            assert.equal(isoNameArr, 2)
+            assert.equal(await greeted.greetingsCounter('Okuhle'), 2)
         });
-        it('should be able to return the how many times a person got greeted', async function () {
+        it('should be able to return the how counter when a person gets greeted repeatedly', async function () {
             let greeted = greetings(pool);
 
             await greeted.insertNames('Xabiso');
             await greeted.insertNames('Xabiso');
             await greeted.insertNames('Xabiso');
-            await greeted.insertNames('Xabiso');
-            
-
-            await greeted.languageSelected('isiXhosa', 'Xabiso');
-            await greeted.languageSelected('English', 'Xabiso');
-            await greeted.languageSelected('isiXhosa', 'Xabiso');
-            await greeted.languageSelected('Greek', 'Xabiso');
-            
-            
-            let rawNameArr = await greeted.getNameList(['Xabiso']);
-            let isoNameArr = [];
-
-            for (let i = 0; i < rawNameArr.length; i++) {
-                isoNameArr[i] = rawNameArr[i].counts;
-            }
-
-            assert.equal(isoNameArr, 4)
+            await greeted.insertNames('Xabiso');        
+  
+            assert.equal( await greeted.greetingsCounter('Xabiso'), 4)
         });
     });
 

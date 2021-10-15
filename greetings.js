@@ -54,7 +54,6 @@ module.exports = function Greet(pool) {
 
     async function greetingsCounter(name) {
         var namesList = await pool.query('select * from usergreet WHERE names =$1', [name]);
-
         return namesList.rows[0].counts
     }
 
